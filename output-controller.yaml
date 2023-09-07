@@ -32,7 +32,7 @@ ota:
 
 # This should point to the public location of this yaml file.
 dashboard_import:
-  package_import_url: github://syntos/LogiCasa/output-controller.yaml@main
+  package_import_url: github://syntos/LogiCasaOutputController/output-controller.yaml@main
   import_full_config: false # or true
 
 wifi:
@@ -405,56 +405,56 @@ output:
     platform: gpio    
     pin:
       mcp23xxx: mcp_hub1
-      number: 7
+      number: 8
       mode: 
         output: True
   - id: DO_26
     platform: gpio    
     pin:
       mcp23xxx: mcp_hub1
-      number: 6
+      number: 9
       mode: 
         output: True
   - id: DO_27
     platform: gpio    
     pin:
       mcp23xxx: mcp_hub1
-      number: 5
+      number: 10
       mode: 
         output: True
   - id: DO_28
     platform: gpio    
     pin:
       mcp23xxx: mcp_hub1
-      number: 4
+      number: 11
       mode: 
         output: True
   - id: DO_29
     platform: gpio    
     pin:
       mcp23xxx: mcp_hub1
-      number: 3
+      number: 12
       mode: 
         output: True
   - id: DO_30
     platform: gpio    
     pin:
       mcp23xxx: mcp_hub1
-      number: 2
+      number: 13
       mode: 
         output: True
   - id: DO_31
     platform: gpio    
     pin:
       mcp23xxx: mcp_hub1
-      number: 1
+      number: 14
       mode: 
         output: True
   - id: DO_32
     platform: gpio    
     pin:
       mcp23xxx: mcp_hub1
-      number: 0
+      number: 15
       mode: 
         output: True
   - platform: template
