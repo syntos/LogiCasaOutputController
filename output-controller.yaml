@@ -1,0 +1,478 @@
+# These substitutions allow the end user to override certain values
+substitutions:
+  name: "outputcontroller"
+  friendly_name: "Output Controller"
+
+esphome:
+  name: "${name}"
+  # Friendly names are used where appropriate in Home Assistant
+  friendly_name: "${friendly_name}"
+  # Automatically add the mac address to the name
+  # so you can use a single firmware for all devices
+  name_add_mac_suffix: true
+
+  # This will allow for (future) project identification,
+  # configuration and updates.
+  project:
+    name: logicasa.output-controller
+    version: "1.0"
+
+
+esp32:
+  board: nodemcu-32s
+
+# To be able to get logs from the device via serial and api.
+logger:
+
+# API is a requirement of the dashboard import.
+api:
+
+# OTA is required for Over-the-Air updating
+ota:
+
+# This should point to the public location of this yaml file.
+dashboard_import:
+  package_import_url: github://syntos/LogiCasa/output-controller.yaml@main
+  import_full_config: false # or true
+
+wifi:
+  # Set up a wifi access point
+  ap:
+
+# In combination with the `ap` this allows the user
+# to provision wifi credentials to the device.
+captive_portal:
+
+# Sets up Bluetooth LE (Only on ESP32) to allow the user
+# to provision wifi credentials to the device.
+esp32_improv:
+  authorizer: none
+
+# Sets up the improv via serial client for Wi-Fi provisioning
+improv_serial:
+  next_url: https://www.logi.casa
+
+sensor:
+  - platform: wifi_signal # Reports the WiFi signal strength/RSSI in dB
+    name: "${name}_WiFi Signal dB"
+    id: wifi_signal_db
+    update_interval: 60s
+    entity_category: "diagnostic"
+
+  - platform: copy # Reports the WiFi signal strength in %
+    source_id: wifi_signal_db
+    name: "${name}_WiFi Signal"
+    id: wifi_signal_pct
+    filters:
+      - lambda: return min(max(2 * (x + 100.0), 0.0), 100.0);
+    unit_of_measurement: "%"
+    entity_category: "diagnostic"
+
+i2c:
+  sda: 21
+  scl: 22
+  scan: True
+ 
+mcp23017:
+  - id: "mcp_hub1"
+    address: 0x20
+  - id: "mcp_hub2"
+    address: 0x24
+
+light:
+  - platform: status_led
+    name: "status led"
+    output: statusoutput
+  - platform: neopixelbus
+    variant: WS2812
+    pin: 5
+    num_leds: 1
+    name: "Status LED"
+    id: statusled
+    icon: "mdi:led-outline"
+    restore_mode: ALWAYS_ON
+    effects:
+      - pulse:
+
+button:
+  - platform: restart
+    name: "Reboot ${name}"
+    id: reboot
+
+  - platform: factory_reset
+    name: Restart with Factory Default Settings
+
+switch:
+  - platform: output
+    name: "${name}_OUTPUT_01"
+    id: OUTPUT_01
+    output: DO_01
+  - platform: output
+    name: "${name}_OUTPUT_02"
+    id: OUTPUT_02
+    output: DO_02
+  - platform: output
+    name: "${name}_OUTPUT_03"
+    id: OUTPUT_03
+    output: DO_03
+  - platform: output
+    name: "${name}_OUTPUT_04"
+    id: OUTPUT_04
+    output: DO_04
+  - platform: output
+    name: "${name}_OUTPUT_05"
+    id: OUTPUT_05
+    output: DO_05
+  - platform: output
+    name: "${name}_OUTPUT_06"
+    id: OUTPUT_06
+    output: DO_06
+  - platform: output
+    name: "${name}_OUTPUT_07"
+    id: OUTPUT_07
+    output: DO_07
+  - platform: output
+    name: "${name}_OUTPUT_08"
+    id: OUTPUT_08
+    output: DO_08
+  - platform: output
+    name: "${name}_OUTPUT_09"
+    id: OUTPUT_09
+    output: DO_09
+  - platform: output
+    name: "${name}_OUTPUT_10"
+    id: OUTPUT_10
+    output: DO_10
+  - platform: output
+    name: "${name}_OUTPUT_11"
+    id: OUTPUT_11
+    output: DO_11
+  - platform: output
+    name: "${name}_OUTPUT_12"
+    id: OUTPUT_12
+    output: DO_12
+  - platform: output
+    name: "${name}_OUTPUT_13"
+    id: OUTPUT_13
+    output: DO_13
+  - platform: output
+    name: "${name}_OUTPUT_14"
+    id: OUTPUT_14
+    output: DO_14
+  - platform: output
+    name: "${name}_OUTPUT_15"
+    id: OUTPUT_15
+    output: DO_15
+  - platform: output
+    name: "${name}_OUTPUT_16"
+    id: OUTPUT_16
+    output: DO_16
+  - platform: output
+    name: "${name}_OUTPUT_17"
+    id: OUTPUT_17
+    output: DO_17
+  - platform: output
+    name: "${name}_OUTPUT_18"
+    id: OUTPUT_18
+    output: DO_18
+  - platform: output
+    name: "${name}_OUTPUT_19"
+    id: OUTPUT_19
+    output: DO_19
+  - platform: output
+    name: "${name}_OUTPUT_20"
+    id: OUTPUT_20
+    output: DO_20
+  - platform: output
+    name: "${name}_OUTPUT_21"
+    id: OUTPUT_21
+    output: DO_21
+  - platform: output
+    name: "${name}_OUTPUT_22"
+    id: OUTPUT_22
+    output: DO_22
+  - platform: output
+    name: "${name}_OUTPUT_23"
+    id: OUTPUT_23
+    output: DO_23
+  - platform: output
+    name: "${name}_OUTPUT_24"
+    id: OUTPUT_24
+    output: DO_24
+  - platform: output
+    name: "${name}_OUTPUT_25"
+    id: OUTPUT_25
+    output: DO_25
+  - platform: output
+    name: "${name}_OUTPUT_26"
+    id: OUTPUT_26
+    output: DO_26
+  - platform: output
+    name: "${name}_OUTPUT_27"
+    id: OUTPUT_27
+    output: DO_27
+  - platform: output
+    name: "${name}_OUTPUT_28"
+    id: OUTPUT_28
+    output: DO_28
+  - platform: output
+    name: "${name}_OUTPUT_29"
+    id: OUTPUT_29
+    output: DO_29
+  - platform: output
+    name: "${name}_OUTPUT_30"
+    id: OUTPUT_30
+    output: DO_30
+  - platform: output
+    name: "${name}_OUTPUT_31"
+    id: OUTPUT_31
+    output: DO_31
+  - platform: output
+    name: "${name}_OUTPUT_32"
+    id: OUTPUT_32
+    output: DO_32
+
+output:
+  - id: DO_01
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub2
+      number: 7
+      mode: 
+        output: True
+  - id: DO_02
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub2
+      number: 6
+      mode: 
+        output: True
+  - id: DO_03
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub2
+      number: 5
+      mode: 
+        output: True
+  - id: DO_04
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub2
+      number: 4
+      mode: 
+        output: True
+  - id: DO_05
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub2
+      number: 3
+      mode: 
+        output: True
+  - id: DO_06
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub2
+      number: 2
+      mode: 
+        output: True
+  - id: DO_07
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub2
+      number: 1
+      mode: 
+        output: True
+  - id: DO_08
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub2
+      number: 0
+      mode: 
+        output: True
+  - id: DO_09
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub1
+      number: 7
+      mode: 
+        output: True
+  - id: DO_10
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub1
+      number: 6
+      mode: 
+        output: True
+  - id: DO_11
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub1
+      number: 5
+      mode: 
+        output: True
+  - id: DO_12
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub1
+      number: 4
+      mode: 
+        output: True
+  - id: DO_13
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub1
+      number: 3
+      mode: 
+        output: True
+  - id: DO_14
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub1
+      number: 2
+      mode: 
+        output: True
+  - id: DO_15
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub1
+      number: 1
+      mode: 
+        output: True
+  - id: DO_16
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub1
+      number: 0
+      mode: 
+        output: True
+  - id: DO_17
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub2
+      number: 8
+      mode: 
+        output: True
+  - id: DO_18
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub2
+      number: 9
+      mode: 
+        output: True
+  - id: DO_19
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub2
+      number: 10
+      mode: 
+        output: True
+  - id: DO_20
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub2
+      number: 11
+      mode: 
+        output: True
+  - id: DO_21
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub2
+      number: 12
+      mode: 
+        output: True
+  - id: DO_22
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub2
+      number: 13
+      mode: 
+        output: True
+  - id: DO_23
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub2
+      number: 14
+      mode: 
+        output: True
+  - id: DO_24
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub2
+      number: 15
+      mode: 
+        output: True
+  - id: DO_25
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub1
+      number: 7
+      mode: 
+        output: True
+  - id: DO_26
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub1
+      number: 6
+      mode: 
+        output: True
+  - id: DO_27
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub1
+      number: 5
+      mode: 
+        output: True
+  - id: DO_28
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub1
+      number: 4
+      mode: 
+        output: True
+  - id: DO_29
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub1
+      number: 3
+      mode: 
+        output: True
+  - id: DO_30
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub1
+      number: 2
+      mode: 
+        output: True
+  - id: DO_31
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub1
+      number: 1
+      mode: 
+        output: True
+  - id: DO_32
+    platform: gpio    
+    pin:
+      mcp23xxx: mcp_hub1
+      number: 0
+      mode: 
+        output: True
+  - platform: template
+    id: statusoutput
+    type: binary
+    write_action:
+      if:
+        condition:
+          wifi.connected:
+        then:
+          - light.turn_on: 
+              id: statusled
+              green: 0.0
+              red: 0.0
+              blue: 1.0              
+        else:
+          - light.turn_on: 
+              id: statusled
+              green: 0.0
+              red: 1.0
+              blue: 0.0  
